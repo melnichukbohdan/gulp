@@ -11,5 +11,13 @@ global.app = {
   gulp: gulp,
 }
 
+// Create the gulp watcher.
+function watcher() {
+  gulp.watch(path.watch.files, copy)
+}
+
+// Gulp dev script
+const dev = gulp.series(copy, watcher);
+
 // Execution of the default script.
-gulp.task('default', copy);
+gulp.task('default', dev);
