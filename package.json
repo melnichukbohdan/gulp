@@ -1,0 +1,26 @@
+{
+  "name": "gulp",
+  "version": "1.0.0",
+  "description": "Link on the video - https://www.youtube.com/watch?v=jU88mLuLWlk",
+  "main": "gulpfile.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/melnichukbohdan/gulp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/melnichukbohdan/gulp/issues"
+  },
+  "homepage": "https://github.com/melnichukbohdan/gulp#readme",
+  "devDependencies": {
+    "gulp": "^5.0.0"
+  },
+  "dependencies": {
+    "path": "^0.12.7"
+  }
+}
