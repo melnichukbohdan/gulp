@@ -7,6 +7,7 @@ import {copy} from "./gulp/tasks/copy.js";
 import {reset} from "./gulp/tasks/reset.js";
 import {html} from "./gulp/tasks/html.js";
 import {server} from "./gulp/tasks/server.js";
+import {scss} from "./gulp/tasks/scss.js";
 
 // Import plugins.
 import {plugins} from "./gulp/config/plugins.js";
@@ -22,9 +23,10 @@ global.app = {
 function watcher() {
   gulp.watch(path.watch.files, copy)
   gulp.watch(path.watch.html, html)
+  gulp.watch(path.watch.scss, scss)
 }
 
-const mainTask = gulp.parallel(copy, html)
+const mainTask = gulp.parallel(copy, html, scss)
 
 // Gulp dev script
 const dev = gulp.series(reset, mainTask, gulp.parallel(watcher, server));
