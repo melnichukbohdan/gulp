@@ -6,6 +6,7 @@ import {path} from "./gulp/config/path.js";
 import {copy} from "./gulp/tasks/copy.js";
 import {reset} from "./gulp/tasks/reset.js";
 import {html} from "./gulp/tasks/html.js";
+import {server} from "./gulp/tasks/server.js";
 
 // Import plugins.
 import {plugins} from "./gulp/config/plugins.js";
@@ -26,7 +27,7 @@ function watcher() {
 const mainTask = gulp.parallel(copy, html)
 
 // Gulp dev script
-const dev = gulp.series(reset, mainTask, watcher);
+const dev = gulp.series(reset, mainTask, gulp.parallel(watcher, server));
 
 // Execution of the default script.
 gulp.task('default', dev);
