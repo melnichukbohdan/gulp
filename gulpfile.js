@@ -4,6 +4,7 @@ import gulp from "gulp";
 import {path} from "./gulp/config/path.js";
 // Import gulp tasks
 import {copy} from "./gulp/tasks/copy.js";
+import {reset} from "./gulp/tasks/reset.js";
 
 // Add values to the global App variable.
 global.app = {
@@ -17,7 +18,7 @@ function watcher() {
 }
 
 // Gulp dev script
-const dev = gulp.series(copy, watcher);
+const dev = gulp.series(reset, copy, watcher);
 
 // Execution of the default script.
 gulp.task('default', dev);

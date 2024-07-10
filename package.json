@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/melnichukbohdan/gulp#readme",
   "devDependencies": {
+    "del": "^7.1.0",
     "gulp": "^5.0.0"
   },
   "dependencies": {
