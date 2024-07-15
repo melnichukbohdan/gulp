@@ -1,6 +1,8 @@
+@import "fonts";
 body {
+  font-family: PlaywriteCU-ExtraLight;
   background: #000;
-  background: url("@img/gulp.png");
+  background: no-repeat center url("@img/waterfall.png");
 
   span {
     color: red;

@@ -10,6 +10,7 @@ import {server} from "./gulp/tasks/server.js";
 import {scss} from "./gulp/tasks/scss.js";
 import {js} from "./gulp/tasks/js.js";
 import {images} from "./gulp/tasks/images.js";
+import {otfToTtf, ttfToWoff, fontsStyle} from "./gulp/tasks/ fonts.js";
 
 // Import plugins.
 import {plugins} from "./gulp/config/plugins.js";
@@ -30,7 +31,11 @@ function watcher() {
   gulp.watch(path.watch.images, images)
 }
 
-const mainTask = gulp.parallel(copy, html, scss, js, images)
+// Sequential processing of fonts.
+const fonts = gulp.series(otfToTtf, ttfToWoff, fontsStyle);
+
+// The main tasks.
+const mainTask = gulp.parallel(fonts, copy, html, scss, js, images)
 
 // Gulp dev script
 const dev = gulp.series(reset, mainTask, gulp.parallel(watcher, server));
