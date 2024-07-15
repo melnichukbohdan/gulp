@@ -3,7 +3,7 @@ import webpack from "webpack-stream";
 
 export const js = () => {
   // Return source folder with enabled source map.
-  return app.gulp.src(app.path.src.js, {sourcemaps: true})
+  return app.gulp.src(app.path.src.js, {sourcemaps: app.isDev })
     // Display errors in pop-up.
     .pipe(app.plugins.plumber(
       app.plugins.notify.onError({
@@ -13,7 +13,7 @@ export const js = () => {
     )
     // Compiled file.
     .pipe(webpack({
-      mode: 'development',
+      mode: app.isBuild ? 'production' : 'development',
       output: {
         filename: 'app.min.js',
       }

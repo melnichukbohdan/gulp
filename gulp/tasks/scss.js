@@ -12,7 +12,7 @@ import groupCssMediaQueries from "gulp-group-css-media-queries"; // Groups media
 const sass = gulpSass(dartSass);
 export const scss = () => {
   // Return source folder with enabled source map.
-  return app.gulp.src(app.path.src.scss, {sourcemaps: true})
+  return app.gulp.src(app.path.src.scss, {sourcemaps: app.isDev })
     // Display errors in pop-up.
     .pipe(app.plugins.plumber(
       app.plugins.notify.onError({
@@ -27,27 +27,59 @@ export const scss = () => {
       outputStyle: 'expanded'
     }))
     // Groups media queries in compiled files.
-    .pipe(groupCssMediaQueries())
+    .pipe(
+      app.plugins.if(
+        app.isBuild,
+        groupCssMediaQueries()
+      )
+    )
+    // .pipe(groupCssMediaQueries())
     // Add class for images.
     // IMPORTANT! Required additional JS logic to determine the browser compatibility with WEBP.
     // IMPORTANT! Works only with webp-converter@2.2.3.
-    .pipe(webpCss({
-      // Additional classed for browsers compatible/incompatible with WEBP.
-      webpClass: '.webp',
-      noWebpClass: '.no-webp'
-    }))
+    .pipe(
+      app.plugins.if(
+        app.isBuild,
+        webpCss({
+          // Additional classed for browsers compatible/incompatible with WEBP.
+          webpClass: '.webp',
+          noWebpClass: '.no-webp'
+        })
+      )
+    )
+    // .pipe(webpCss({
+    //   // Additional classed for browsers compatible/incompatible with WEBP.
+    //   webpClass: '.webp',
+    //   noWebpClass: '.no-webp'
+    // }))
+    .pipe(
+      app.plugins.if(
+        app.isBuild,
+        autoPrefixer({
+          grid: true,
+          overrideBrowserList: ['last 3 versions'],
+          cascade: true,
+        })
+      )
+    )
     // Add prefix to styles.
-    .pipe(autoPrefixer({
-      grid: true,
-      overrideBrowserList: ['last 3 versions'],
-      cascade: true,
-    }))
+    // .pipe(autoPrefixer({
+    //   grid: true,
+    //   overrideBrowserList: ['last 3 versions'],
+    //   cascade: true,
+    // }))
     // Create/update compiled file in the Build folder.
     // IMPORTANT! Uncomment if you need to get an uncompressed CSS file.
     .pipe(app.gulp.dest(app.path.build.css))
 
     // Compress the CSS file.
-    .pipe(cleanCss())
+    .pipe(
+      app.plugins.if(
+        app.isBuild,
+        cleanCss()
+      )
+    )
+    // .pipe(cleanCss())
     // Replace the suffix of the compiled  CSS file.
     .pipe(rename({
       extname: ".min.css"

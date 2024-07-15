@@ -17,6 +17,8 @@ import {plugins} from "./gulp/config/plugins.js";
 
 // Add values to the global App variable.
 global.app = {
+  isBuild: process.argv.includes('--build'),
+  isDev: !process.argv.includes('--build'),
   path: path,
   gulp: gulp,
   plugins: plugins,
@@ -37,8 +39,13 @@ const fonts = gulp.series(otfToTtf, ttfToWoff, fontsStyle);
 // The main tasks.
 const mainTask = gulp.parallel(fonts, copy, html, scss, js, images)
 
-// Gulp dev script
+// Gulp scripts
 const dev = gulp.series(reset, mainTask, gulp.parallel(watcher, server));
+const build = gulp.series(reset, mainTask)
+
+// Export scripts
+export { dev }
+export { build }
 
 // Execution of the default script.
 gulp.task('default', dev);
